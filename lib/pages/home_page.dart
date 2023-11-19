@@ -45,12 +45,18 @@ class _HomePageState extends State<HomePage> {
 
   //save new task
   void saveNewTask() {
-    setState(() {
-      db.toDoList.add([_controler.text, false]);
-      _controler.clear();
-    });
-    Navigator.of(context).pop();
-    db.updateDataBase();
+    final String taskName = _controler.text.trim();
+
+    if (taskName.isNotEmpty) {
+      setState(() {
+        db.toDoList.add([_controler.text, false]);
+        _controler.clear();
+      });
+      Navigator.of(context).pop();
+      db.updateDataBase();
+    } else {
+      Navigator.of(context).pop();
+    }
   }
 
   //create a new task
@@ -77,14 +83,19 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.yellow[200],
+        backgroundColor: Colors.yellow[300],
         appBar: AppBar(
+          backgroundColor: Colors.yellow[600],
           title: const Center(child: Text('TO DO')),
           elevation: 0,
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: createNewTask,
-          child: const Icon(Icons.add),
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(bottom: 60, right: 20),
+          child: FloatingActionButton(
+            backgroundColor: Colors.yellow[600],
+            onPressed: createNewTask,
+            child: const Icon(Icons.add),
+          ),
         ),
         body: ListView.builder(
           itemCount: db.toDoList.length,
