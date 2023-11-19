@@ -115,12 +115,12 @@ class _HomePageState extends State<HomePage> {
           elevation: 0,
         ),
         floatingActionButton: Padding(
-          padding: const EdgeInsets.only(bottom: 60, right: 20),
-          child: FloatingActionButton(
-            backgroundColor: Colors.yellow[600],
-            onPressed: createNewTask,
-            child: const Icon(Icons.add),
-          ),
+          padding: const EdgeInsets.only(bottom: 100, right: 20),
+          child: FloatingActionButton.extended(
+              backgroundColor: Colors.yellow[600],
+              onPressed: createNewTask,
+              icon: const Icon(Icons.add),
+              label: const Text('Create New Task')),
         ),
         body: ListView.builder(
           itemCount: db.toDoList.length,
