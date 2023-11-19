@@ -61,6 +61,8 @@ class _HomePageState extends State<HomePage> {
 
   //create a new task
   void createNewTask() {
+    _controler.clear();
+
     showDialog(
         context: context,
         builder: (context) {
@@ -70,6 +72,29 @@ class _HomePageState extends State<HomePage> {
             onCancel: () => Navigator.of(context).pop(),
           );
         });
+  }
+
+  //edit task
+  void editTask(int index) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return DialogBox(
+          controler: _controler
+            ..text = db.toDoList[index][0], // set initial text
+          onSave: () {
+            setState(() {
+              db.toDoList[index][0] =
+                  _controler.text.trim(); // update task name
+              _controler.clear();
+            });
+            Navigator.of(context).pop();
+            db.updateDataBase();
+          },
+          onCancel: () => Navigator.of(context).pop(),
+        );
+      },
+    );
   }
 
   //delete task
@@ -104,6 +129,7 @@ class _HomePageState extends State<HomePage> {
               taskName: db.toDoList[index][0],
               taskCompleted: db.toDoList[index][1],
               onChanged: (value) => checkBoxChanged(value, index),
+              editFunction: (context) => editTask(index),
               deleteFunction: (context) => deleteTask(index),
             );
           },

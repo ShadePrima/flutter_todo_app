@@ -4,14 +4,16 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 class ToDoTile extends StatelessWidget {
   final String taskName;
   final bool taskCompleted;
-  Function(bool?)? onChanged;
-  Function(BuildContext)? deleteFunction;
+  final Function(bool?)? onChanged;
+  final Function(BuildContext)? editFunction;
+  final Function(BuildContext)? deleteFunction;
 
-  ToDoTile(
+  const ToDoTile(
       {super.key,
       required this.taskName,
       required this.taskCompleted,
       required this.onChanged,
+      required this.editFunction,
       required this.deleteFunction});
 
   @override
@@ -19,7 +21,13 @@ class ToDoTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 25, right: 25, top: 25),
       child: Slidable(
-        endActionPane: ActionPane(motion: StretchMotion(), children: [
+        endActionPane: ActionPane(motion: const StretchMotion(), children: [
+          SlidableAction(
+            onPressed: editFunction,
+            icon: Icons.edit,
+            backgroundColor: Colors.green.shade300,
+            borderRadius: BorderRadius.circular(8),
+          ),
           SlidableAction(
             onPressed: deleteFunction,
             icon: Icons.delete,
